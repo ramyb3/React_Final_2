@@ -30,7 +30,7 @@ export default function Customers() {
         <h2> Customers Table:</h2>
 
         <Link to="addCustomer">
-          <input type="button" value="Add Customer" className="button" />
+          <button>Add Customer</button>
         </Link>
         <br />
         <br />
@@ -105,12 +105,14 @@ export default function Customers() {
                   </td>
 
                   <td>
-                    <input
-                      type="button"
-                      onClick={() => (setAdd(true), setId(item.ID))}
-                      value="Buy Products"
-                      className="button"
-                    />
+                    <button
+                      onClick={() => {
+                        setAdd(true);
+                        setId(item.ID);
+                      }}
+                    >
+                      Buy Products
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -145,12 +147,7 @@ export default function Customers() {
           })}
           <br />
 
-          <input
-            type="button"
-            value="Buy"
-            onClick={addProducts}
-            className="button"
-          />
+          <button onClick={addProducts}>Buy</button>
           <br />
           <br />
         </div>

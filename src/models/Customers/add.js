@@ -51,10 +51,10 @@ export default function AddProduct() {
       <br />
 
       <Link to="/customers">
-        <input type="button" onClick={send} value="Add" className="button" />
+        <button onClick={send}>Add</button>
       </Link>
       <Link to="/customers">
-        <input type="button" value="Cancel" className="button" />
+        <button>Cancel</button>
       </Link>
     </div>
   );

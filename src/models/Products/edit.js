@@ -91,22 +91,16 @@ export default function EditProduct() {
         <br />
         <br />
         <Link to="/products">
-          <input
-            type="button"
-            onClick={send}
-            value="Update"
-            className="button"
-          />
+          <button onClick={send}>Update</button>
         </Link>
         <Link to="/products">
-          <input
-            type="button"
+          <button
             onClick={() =>
               dispatch({ type: "deleteProduct", payload: product.ID })
             }
-            value="Delete"
-            className="button"
-          />
+          >
+            Delete
+          </button>
         </Link>
         <br />
         <br />

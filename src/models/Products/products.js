@@ -73,7 +73,7 @@ export default function Products() {
         <h2> Products List:</h2>
 
         <Link to="addProduct">
-          <input type="button" value="Add Product" className="button" />
+          <button>Add Product</button>
         </Link>
         <br />
         <br />
@@ -136,14 +136,14 @@ export default function Products() {
                                 </li>
                               </ul>
 
-                              <input
-                                type="button"
-                                value="Add"
-                                onClick={() => (
-                                  setAdd(true), setId(x.CustomerID)
-                                )}
-                                className="button"
-                              />
+                              <button
+                                onClick={() => {
+                                  setAdd(true);
+                                  setId(x.CustomerID);
+                                }}
+                              >
+                                Add
+                              </button>
                               <br />
                             </>
                           ) : null}
@@ -185,12 +185,7 @@ export default function Products() {
           })}
           <br />
 
-          <input
-            type="button"
-            value="Buy"
-            onClick={addProducts}
-            className="button"
-          />
+          <button onClick={addProducts}>Buy</button>
           <br />
         </div>
       ) : null}

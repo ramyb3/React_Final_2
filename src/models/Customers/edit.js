@@ -88,22 +88,16 @@ export default function EditCustomer() {
         <br />
         <br />
         <Link to="/customers">
-          <input
-            type="button"
-            onClick={send}
-            value="Update"
-            className="button"
-          />
+          <button onClick={send}>Update</button>
         </Link>
         <Link to="/customers">
-          <input
-            type="button"
+          <button
             onClick={() =>
               dispatch({ type: "deleteCustomer", payload: customer.ID })
             }
-            value="Delete"
-            className="button"
-          />
+          >
+            Delete
+          </button>
         </Link>
         <br />
         <br />

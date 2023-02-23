@@ -22,21 +22,13 @@ export default function Menu() {
     <div>
       <div style={{ textAlign: "center" }}>
         <Link to="products">
-          <input
-            type="button"
-            value="Products"
-            className="button"
-            style={{ height: "30px", fontSize: "15px" }}
-          />
+          <button style={{ height: "30px", fontSize: "15px" }}>Products</button>
         </Link>
         &nbsp;
         <Link to="customers">
-          <input
-            type="button"
-            value="Customers"
-            className="button"
-            style={{ height: "30px", fontSize: "15px" }}
-          />
+          <button style={{ height: "30px", fontSize: "15px" }}>
+            Customers
+          </button>
         </Link>
       </div>
 
