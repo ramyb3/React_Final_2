@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-function AddProduct() {
+export default function AddProduct() {
   const dispatch = useDispatch();
 
   const [customer, setCustomer] = useState({
@@ -13,9 +13,15 @@ function AddProduct() {
   });
 
   const send = () => {
-    if (customer.Fname == "" || customer.Lname == "" || customer.City == "")
+    if (
+      customer.Fname === "" ||
+      customer.Lname === "" ||
+      customer.City === ""
+    ) {
       alert("YOU NEED TO FILL ALL THE FORM!!");
-    else dispatch({ type: "addCustomer", payload: customer });
+    } else {
+      dispatch({ type: "addCustomer", payload: customer });
+    }
   };
 
   return (
@@ -53,5 +59,3 @@ function AddProduct() {
     </div>
   );
 }
-
-export default AddProduct;

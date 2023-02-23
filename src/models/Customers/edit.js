@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 
-function EditCustomer() {
+export default function EditCustomer() {
   const storeData = useSelector((state) => state);
-
   const dispatch = useDispatch();
-
   const params = useParams();
 
   const [products, setProducts] = useState([]);
@@ -18,25 +16,23 @@ function EditCustomer() {
   });
 
   useEffect(() => {
-    let obj = storeData[0][0].find((x) => x.ID == params.id);
+    const obj = storeData[0][0].find((x) => x.ID === params.id);
+    let arr = storeData[0][2].filter((x) => x.CustomerID === params.id);
+    const arr1 = [];
 
-    let arr = storeData[0][2].filter((x) => x.CustomerID == params.id);
-
-    let arr1 = [];
-
-    for (var i = 0; i < arr.length; i++) {
-      let check = storeData[0][1].find((x) => x.ID == arr[i].ProductID);
-
+    for (let i = 0; i < arr.length; i++) {
+      const check = storeData[0][1].find((x) => x.ID === arr[i].ProductID);
       arr1.push(check);
     }
 
     arr = [];
 
     let temp = arr1.map((x) => x.ID);
-    temp = temp.filter((x, index) => temp.indexOf(x) == index);
+    temp = temp.filter((x, index) => temp.indexOf(x) === index);
 
-    for (var i = 0; i < temp.length; i++)
-      arr.push(arr1.find((x) => x.ID == temp[i]));
+    for (let i = 0; i < temp.length; i++) {
+      arr.push(arr1.find((x) => x.ID === temp[i]));
+    }
 
     setProducts(arr);
     setCustomer({
@@ -48,9 +44,15 @@ function EditCustomer() {
   }, []);
 
   const send = () => {
-    if (customer.Fname == "" || customer.Lname == "" || customer.City == "")
+    if (
+      customer.Fname === "" ||
+      customer.Lname === "" ||
+      customer.City === ""
+    ) {
       alert("YOU NEED TO FILL ALL THE FORM!!");
-    else dispatch({ type: "updateCustomer", payload: customer });
+    } else {
+      dispatch({ type: "updateCustomer", payload: customer });
+    }
   };
 
   return (
@@ -108,7 +110,7 @@ function EditCustomer() {
       </div>
 
       <div className="right">
-        {products.length != 0 ? (
+        {products.length !== 0 ? (
           <div>
             <b>Products that this customer purchased:</b>
 
@@ -133,5 +135,3 @@ function EditCustomer() {
     </div>
   );
 }
-
-export default EditCustomer;

@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 
-function Comp(props) {
+export default function Comp(props) {
   const storeData = useSelector((state) => state);
 
   return (
     <>
-      {storeData[0][2].find((x) => x.ProductID == props.props.ID) !=
+      {storeData[0][2].find((x) => x.ProductID === props.props.ID) !==
       undefined ? (
         <b>Customers that purchased this product:</b>
       ) : (
@@ -14,5 +14,3 @@ function Comp(props) {
     </>
   );
 }
-
-export default Comp;

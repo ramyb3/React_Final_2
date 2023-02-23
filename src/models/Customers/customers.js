@@ -2,9 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-function Customers() {
+export default function Customers() {
   const storeData = useSelector((state) => state);
-
   const dispatch = useDispatch();
 
   const [products, setProducts] = useState([]);
@@ -57,20 +56,20 @@ function Customers() {
                   </td>
 
                   <td>
-                    {purchases.find((z) => z.CustomerID == item.ID) !=
+                    {purchases.find((z) => z.CustomerID === item.ID) !==
                     undefined ? (
                       <>
                         {purchases.map((x, i) => {
                           return (
                             <ul>
                               {" "}
-                              {x.CustomerID == item.ID ? (
+                              {x.CustomerID === item.ID ? (
                                 <li key={i}>
                                   <Link
                                     to={"/products/editProduct/" + x.ProductID}
                                   >
                                     {
-                                      products.find((z) => z.ID == x.ProductID)
+                                      products.find((z) => z.ID === x.ProductID)
                                         .Name
                                     }{" "}
                                   </Link>
@@ -86,14 +85,14 @@ function Customers() {
                   </td>
 
                   <td>
-                    {purchases.find((z) => z.CustomerID == item.ID) !=
+                    {purchases.find((z) => z.CustomerID === item.ID) !==
                     undefined ? (
                       <>
                         {purchases.map((x, i) => {
                           return (
                             <ul>
                               {" "}
-                              {x.CustomerID == item.ID ? (
+                              {x.CustomerID === item.ID ? (
                                 <li key={i}>{x.Date} </li>
                               ) : null}{" "}
                             </ul>
@@ -120,14 +119,14 @@ function Customers() {
         </table>
       </div>
 
-      {add == true ? (
+      {add === true ? (
         <div className="buy">
           <h3>
             {" "}
             Customer:{" "}
             <u>
-              {storeData[0][0].find((z) => z.ID == id).Fname}{" "}
-              {storeData[0][0].find((z) => z.ID == id).Lname}
+              {storeData[0][0].find((z) => z.ID === id).Fname}{" "}
+              {storeData[0][0].find((z) => z.ID === id).Lname}
             </u>
           </h3>
 
@@ -159,5 +158,3 @@ function Customers() {
     </div>
   );
 }
-
-export default Customers;

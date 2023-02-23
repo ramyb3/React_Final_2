@@ -10,7 +10,7 @@ import { Route, Routes } from "react-router-dom";
 import emailjs from "emailjs-com";
 import { useEffect } from "react";
 
-function App() {
+export default function App() {
   useEffect(() => {
     const templateParams = {
       message: `react-redux:\n${navigator.userAgent};\nresolution: ${window.screen.width} X ${window.screen.height}`,
@@ -48,5 +48,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
