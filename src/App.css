@@ -13,17 +13,6 @@
   text-align: left;
 }
 
-@media (max-width: 553px) {
-  .customers {
-    width: 100%;
-  }
-
-  .buy {
-    clear: both;
-    width: 100%;
-  }
-}
-
 .left {
   float: left;
   width: 50%;
@@ -32,21 +21,6 @@
 .right {
   float: right;
   width: 50%;
-}
-
-@media (max-width: 700px) {
-  .left {
-    width: 100%;
-  }
-
-  .right {
-    clear: both;
-    width: 100%;
-  }
-
-  .textWidth {
-    width: 40%;
-  }
 }
 
 .border {
@@ -62,5 +36,31 @@
 @media (max-width: 444px) {
   .size {
     font-size: 70%;
+  }
+}
+
+@media (max-width: 553px) {
+  .customers {
+    width: 100%;
+  }
+
+  .buy {
+    clear: both;
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .left {
+    width: 100%;
+  }
+
+  .right {
+    clear: both;
+    width: 100%;
+  }
+
+  .textWidth {
+    width: 40%;
   }
 }

@@ -1,7 +1,7 @@
+import Comp1 from "./comp1";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import Comp1 from "./comp1";
 
 export default function Products() {
   const storeData = useSelector((state) => state);
