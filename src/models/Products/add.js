@@ -13,7 +13,7 @@ export default function AddProduct() {
   });
 
   const send = () => {
-    if (product.Price < 1 || product.Quantity < 1 || product.Name === "") {
+    if (product.Price < 1 || product.Quantity < 1 || product.Name == "") {
       alert("YOU NEED TO FILL ALL THE FORM!!");
     } else {
       dispatch({ type: "addProduct", payload: product });

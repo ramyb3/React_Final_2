@@ -5,7 +5,7 @@ export default function Comp(props) {
 
   return (
     <>
-      {storeData[0][2].find((x) => x.ProductID === props.props.ID) !==
+      {storeData[0][2].find((x) => x.ProductID == props.props.ID) !=
       undefined ? (
         <b>Customers that purchased this product:</b>
       ) : (

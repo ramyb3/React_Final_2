@@ -16,22 +16,22 @@ export default function EditProduct() {
   });
 
   useEffect(() => {
-    const obj = storeData[0][1].find((x) => x.ID === params.id);
-    let arr = storeData[0][2].filter((x) => x.ProductID === params.id);
-    let arr1 = [];
+    const obj = storeData[0][1].find((x) => x.ID == params.id);
+    let arr = storeData[0][2].filter((x) => x.ProductID == params.id);
+    const arr1 = [];
 
     for (let i = 0; i < arr.length; i++) {
-      const check = storeData[0][0].find((x) => x.ID === arr[i].CustomerID);
+      const check = storeData[0][0].find((x) => x.ID == arr[i].CustomerID);
       arr1.push(check);
     }
 
     arr = [];
 
     let temp = arr1.map((x) => x.ID);
-    temp = temp.filter((x, index) => temp.indexOf(x) === index);
+    temp = temp.filter((x, index) => temp.indexOf(x) == index);
 
     for (let i = 0; i < temp.length; i++) {
-      arr.push(arr1.find((x) => x.ID === temp[i]));
+      arr.push(arr1.find((x) => x.ID == temp[i]));
     }
 
     setCustomers(arr);
@@ -45,7 +45,7 @@ export default function EditProduct() {
   }, []);
 
   const send = () => {
-    if (product.Price < 1 || product.Quantity < 1 || product.Name === "") {
+    if (product.Price < 1 || product.Quantity < 1 || product.Name == "") {
       alert("YOU NEED TO FILL ALL THE FORM!!");
     } else {
       dispatch({ type: "updateProduct", payload: product });
@@ -53,11 +53,11 @@ export default function EditProduct() {
   };
 
   return (
-    <div>
+    <>
       <h2>Edit Product:</h2>
 
       <div className="left">
-        <b>Product Name:</b>{" "}
+        <b>Product Name: </b>
         <input
           type="text"
           className="textWidth"
@@ -66,7 +66,7 @@ export default function EditProduct() {
         />
         <br />
         <br />
-        <b>Product Price:</b>{" "}
+        <b>Product Price: </b>
         <input
           type="number"
           min="1"
@@ -78,7 +78,7 @@ export default function EditProduct() {
         />
         <br />
         <br />
-        <b>Product Quantity: </b>{" "}
+        <b>Product Quantity: </b>
         <input
           type="number"
           min="1"
@@ -107,15 +107,15 @@ export default function EditProduct() {
       </div>
 
       <div className="right">
-        {customers.length !== 0 ? (
+        {customers.length != 0 ? (
           <div>
             <b>Customers that purchased this product:</b>
             <ul>
               {customers.map((item, index) => {
                 return (
                   <li key={index}>
-                    <Link to={"/customers/editCustomer/" + item.ID}>
-                      {item.Fname} {item.Lname}{" "}
+                    <Link to={`/customers/editCustomer/${item.ID}`}>
+                      {item.Fname} {item.Lname}
                     </Link>
                     <br />
                   </li>
@@ -125,10 +125,10 @@ export default function EditProduct() {
           </div>
         ) : (
           <div>
-            <b>There isn't any Customer that purchased this product!! </b>
+            <b>There isn't any Customer that purchased this product!!</b>
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }

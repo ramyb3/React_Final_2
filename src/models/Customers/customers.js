@@ -27,7 +27,7 @@ export default function Customers() {
   return (
     <div>
       <div className="customers">
-        <h2> Customers Table:</h2>
+        <h2>Customers Table:</h2>
 
         <Link to="addCustomer">
           <button>Add Customer</button>
@@ -41,7 +41,7 @@ export default function Customers() {
               <th>Name</th>
               <th>Purchased Products</th>
               <th>Purchased Date</th>
-              <th> Buy</th>
+              <th>Buy</th>
             </tr>
           </thead>
 
@@ -50,31 +50,30 @@ export default function Customers() {
               <tbody key={index}>
                 <tr>
                   <td>
-                    <Link to={"editCustomer/" + item.ID}>
-                      {item.Fname} {item.Lname}{" "}
-                    </Link>{" "}
+                    <Link to={`editCustomer/${item.ID}`}>
+                      {item.Fname} {item.Lname}
+                    </Link>
                   </td>
 
                   <td>
-                    {purchases.find((z) => z.CustomerID === item.ID) !==
+                    {purchases.find((purchase) => purchase.CustomerID == item.ID) !=
                     undefined ? (
                       <>
-                        {purchases.map((x, i) => {
+                        {purchases.map((purchase, i) => {
                           return (
                             <ul>
-                              {" "}
-                              {x.CustomerID === item.ID ? (
+                              {purchase.CustomerID == item.ID ? (
                                 <li key={i}>
                                   <Link
-                                    to={"/products/editProduct/" + x.ProductID}
+                                    to={`/products/editProduct/${purchase.ProductID}`}
                                   >
                                     {
-                                      products.find((z) => z.ID === x.ProductID)
+                                      products.find((product) => product.ID == purchase.ProductID)
                                         .Name
-                                    }{" "}
+                                    }
                                   </Link>
                                 </li>
-                              ) : null}{" "}
+                              ) : null}
                             </ul>
                           );
                         })}
@@ -85,16 +84,15 @@ export default function Customers() {
                   </td>
 
                   <td>
-                    {purchases.find((z) => z.CustomerID === item.ID) !==
+                    {purchases.find((purchase) => purchase.CustomerID == item.ID) !=
                     undefined ? (
                       <>
-                        {purchases.map((x, i) => {
+                        {purchases.map((purchase, i) => {
                           return (
                             <ul>
-                              {" "}
-                              {x.CustomerID === item.ID ? (
-                                <li key={i}>{x.Date} </li>
-                              ) : null}{" "}
+                              {purchase.CustomerID == item.ID ? (
+                                <li key={i}>{purchase.Date} </li>
+                              ) : null}
                             </ul>
                           );
                         })}
@@ -121,14 +119,13 @@ export default function Customers() {
         </table>
       </div>
 
-      {add === true ? (
+      {add == true ? (
         <div className="buy">
           <h3>
-            {" "}
             Customer:{" "}
             <u>
-              {storeData[0][0].find((z) => z.ID === id).Fname}{" "}
-              {storeData[0][0].find((z) => z.ID === id).Lname}
+              {storeData[0][0].find((z) => z.ID == id).Fname}{" "}
+              {storeData[0][0].find((z) => z.ID == id).Lname}
             </u>
           </h3>
 

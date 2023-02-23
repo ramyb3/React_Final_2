@@ -13,11 +13,7 @@ export default function AddProduct() {
   });
 
   const send = () => {
-    if (
-      customer.Fname === "" ||
-      customer.Lname === "" ||
-      customer.City === ""
-    ) {
+    if (customer.Fname == "" || customer.Lname == "" || customer.City == "") {
       alert("YOU NEED TO FILL ALL THE FORM!!");
     } else {
       dispatch({ type: "addCustomer", payload: customer });

@@ -1,8 +1,8 @@
 function reducer(state = [], action) {
   switch (action.type) {
-    case "LOAD":
+    case "LOAD":{
       return [...state, action.payload];
-
+    }
     case "addProduct": {
       const id = Math.max(...state[0][1].map((x) => x.ID));
       action.payload.ID = id + 1;
@@ -10,21 +10,18 @@ function reducer(state = [], action) {
 
       return [[state[0][0], state[0][1], state[0][2]]];
     }
-
     case "updateProduct": {
-      const arr = state[0][1].filter((x) => x.ID !== action.payload.ID);
+      const arr = state[0][1].filter((x) => x.ID != action.payload.ID);
       arr.push(action.payload);
 
       return [[state[0][0], arr, state[0][2]]];
     }
-
     case "deleteProduct": {
-      const arr1 = state[0][1].filter((x) => x.ID !== action.payload);
-      const arr2 = state[0][2].filter((x) => x.ProductID !== action.payload); // all purchases not this product
+      const arr1 = state[0][1].filter((x) => x.ID != action.payload);
+      const arr2 = state[0][2].filter((x) => x.ProductID != action.payload); // all purchases not this product
 
       return [[state[0][0], arr1, arr2]];
     }
-
     case "addCustomer": {
       const id = Math.max(...state[0][0].map((x) => x.ID));
       action.payload.ID = id + 1;
@@ -32,21 +29,18 @@ function reducer(state = [], action) {
 
       return [[state[0][0], state[0][1], state[0][2]]];
     }
-
     case "updateCustomer": {
-      const arr = state[0][0].filter((x) => x.ID !== action.payload.ID);
+      const arr = state[0][0].filter((x) => x.ID != action.payload.ID);
       arr.push(action.payload);
 
       return [[arr, state[0][1], state[0][2]]];
     }
-
     case "deleteCustomer": {
-      const arr1 = state[0][0].filter((x) => x.ID !== action.payload);
-      const arr2 = state[0][2].filter((x) => x.CustomerID !== action.payload); // all purchases not this customer
+      const arr1 = state[0][0].filter((x) => x.ID != action.payload);
+      const arr2 = state[0][2].filter((x) => x.CustomerID != action.payload); // all purchases not this customer
 
       return [[arr1, state[0][1], arr2]];
     }
-
     case "addPurchase": {
       let date = new Date(Date.now());
 

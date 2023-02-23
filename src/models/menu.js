@@ -19,7 +19,7 @@ export default function Menu() {
   }, []);
 
   return (
-    <div>
+    <>
       <div style={{ textAlign: "center" }}>
         <Link to="products">
           <button style={{ height: "30px", fontSize: "15px" }}>Products</button>
@@ -33,6 +33,6 @@ export default function Menu() {
       </div>
 
       <Outlet />
-    </div>
+    </>
   );
 }

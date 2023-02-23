@@ -16,22 +16,22 @@ export default function EditCustomer() {
   });
 
   useEffect(() => {
-    const obj = storeData[0][0].find((x) => x.ID === params.id);
-    let arr = storeData[0][2].filter((x) => x.CustomerID === params.id);
+    const obj = storeData[0][0].find((x) => x.ID == params.id);
+    let arr = storeData[0][2].filter((x) => x.CustomerID == params.id);
     const arr1 = [];
 
     for (let i = 0; i < arr.length; i++) {
-      const check = storeData[0][1].find((x) => x.ID === arr[i].ProductID);
+      const check = storeData[0][1].find((x) => x.ID == arr[i].ProductID);
       arr1.push(check);
     }
 
     arr = [];
 
     let temp = arr1.map((x) => x.ID);
-    temp = temp.filter((x, index) => temp.indexOf(x) === index);
+    temp = temp.filter((x, index) => temp.indexOf(x) == index);
 
     for (let i = 0; i < temp.length; i++) {
-      arr.push(arr1.find((x) => x.ID === temp[i]));
+      arr.push(arr1.find((x) => x.ID == temp[i]));
     }
 
     setProducts(arr);
@@ -44,11 +44,7 @@ export default function EditCustomer() {
   }, []);
 
   const send = () => {
-    if (
-      customer.Fname === "" ||
-      customer.Lname === "" ||
-      customer.City === ""
-    ) {
+    if (customer.Fname == "" || customer.Lname == "" || customer.City == "") {
       alert("YOU NEED TO FILL ALL THE FORM!!");
     } else {
       dispatch({ type: "updateCustomer", payload: customer });
@@ -56,7 +52,7 @@ export default function EditCustomer() {
   };
 
   return (
-    <div>
+    <>
       <h2>Edit Customer:</h2>
 
       <div className="left">
@@ -104,7 +100,7 @@ export default function EditCustomer() {
       </div>
 
       <div className="right">
-        {products.length !== 0 ? (
+        {products.length != 0 ? (
           <div>
             <b>Products that this customer purchased:</b>
 
@@ -112,8 +108,8 @@ export default function EditCustomer() {
               {products.map((item, index) => {
                 return (
                   <li key={index}>
-                    <Link to={"/products/editProduct/" + item.ID}>
-                      {item.Name}{" "}
+                    <Link to={`/products/editProduct/${item.ID}`}>
+                      {item.Name}
                     </Link>
                   </li>
                 );
@@ -122,10 +118,10 @@ export default function EditCustomer() {
           </div>
         ) : (
           <div>
-            <b>This customer didn't purchased any product!! </b>
+            <b>This customer didn't purchased any product!!</b>
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }
