@@ -56,20 +56,23 @@ export default function Customers() {
                   </td>
 
                   <td>
-                    {purchases.find((purchase) => purchase.CustomerID == item.ID) !=
-                    undefined ? (
+                    {purchases.find(
+                      (purchase) => purchase.CustomerID == item.ID
+                    ) != undefined ? (
                       <>
                         {purchases.map((purchase, i) => {
                           return (
-                            <ul>
+                            <ul key={i}>
                               {purchase.CustomerID == item.ID ? (
-                                <li key={i}>
+                                <li>
                                   <Link
                                     to={`/products/editProduct/${purchase.ProductID}`}
                                   >
                                     {
-                                      products.find((product) => product.ID == purchase.ProductID)
-                                        .Name
+                                      products.find(
+                                        (product) =>
+                                          product.ID == purchase.ProductID
+                                      ).Name
                                     }
                                   </Link>
                                 </li>
@@ -84,14 +87,15 @@ export default function Customers() {
                   </td>
 
                   <td>
-                    {purchases.find((purchase) => purchase.CustomerID == item.ID) !=
-                    undefined ? (
+                    {purchases.find(
+                      (purchase) => purchase.CustomerID == item.ID
+                    ) != undefined ? (
                       <>
                         {purchases.map((purchase, i) => {
                           return (
-                            <ul>
+                            <ul key={i}>
                               {purchase.CustomerID == item.ID ? (
-                                <li key={i}>{purchase.Date} </li>
+                                <li>{purchase.Date}</li>
                               ) : null}
                             </ul>
                           );

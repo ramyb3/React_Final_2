@@ -1,6 +1,6 @@
 function reducer(state = [], action) {
   switch (action.type) {
-    case "LOAD":{
+    case "LOAD": {
       return [...state, action.payload];
     }
     case "addProduct": {

@@ -18,11 +18,9 @@ export default function Products() {
   useEffect(() => {
     setCustomers(storeData[0][0]);
     setPurchases(storeData[0][2]);
-  }, [storeData]);
 
-  useEffect(() => {
-    const arr1 = purchases.map((x) => x.CustomerID);
-    const arr2 = purchases.map((x) => x.ProductID);
+    const arr1 = storeData[0][2].map((x) => x.CustomerID);
+    const arr2 = storeData[0][2].map((x) => x.ProductID);
     const temp = arr1.filter((x, index) => arr1.indexOf(x) == index);
     const temp1 = arr2.filter((x, index) => arr2.indexOf(x) == index);
     const obj = [];
@@ -31,10 +29,10 @@ export default function Products() {
       const products = [];
 
       for (let j = 0; j < temp1.length; j++) {
-        const prod = purchases.filter(
+        const prod = storeData[0][2].filter(
           (x) => x.ProductID == temp1[j] && x.CustomerID == temp[i]
         );
-        let date = purchases
+        let date = storeData[0][2]
           .filter((x) => x.ProductID == temp1[j] && x.CustomerID == temp[i])
           .map((x) => x.Date);
 
@@ -58,7 +56,7 @@ export default function Products() {
     }
 
     setAmount(count);
-  });
+  }, [storeData]);
 
   const addProducts = () => {
     dispatch({ type: "addPurchase", payload: [id, list] });
@@ -89,7 +87,8 @@ export default function Products() {
                 <br />
                 <br />
                 <Comp1 props={item} />
-                {purchases.find((purchase) => purchase.ProductID == item.ID) != undefined ? (
+                {purchases.find((purchase) => purchase.ProductID == item.ID) !=
+                undefined ? (
                   <>
                     {all.map((x, i) => {
                       return (
@@ -125,7 +124,7 @@ export default function Products() {
                                           <>
                                             {y.Date.map((z, k) => {
                                               return <div key={k}>{z}</div>;
-                                            })}{" "}
+                                            })}
                                           </>
                                         ) : null}
                                       </div>
@@ -159,7 +158,8 @@ export default function Products() {
 
       {add == true ? (
         <div style={{ float: "left", width: "30%", textAlign: "left" }}>
-          <h3>Customer:{" "}
+          <h3>
+            Customer:{" "}
             <u>
               {customers.find((z) => z.ID == id).Fname}{" "}
               {customers.find((z) => z.ID == id).Lname}
@@ -188,7 +188,7 @@ export default function Products() {
 
       <div className="amount">
         <div className="border" style={{ marginTop: "35px" }}>
-          <h3> Total amount of purchases: {amount}$</h3>
+          <h3>Total amount of purchases: {amount}$</h3>
         </div>
       </div>
     </div>
