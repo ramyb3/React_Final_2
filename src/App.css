@@ -18,25 +18,25 @@ button {
   text-align: left;
 }
 
-.left {
-  float: left;
-  width: 50%;
-}
-
-.right {
-  float: right;
-  width: 50%;
-}
-
 .amount {
   float: right;
   width: 25%;
   text-align: center;
 }
 
+@media (min-width: 444px) {
+  .mainPage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 444px) {
   .size {
     font-size: 70%;
+  }
+
+  .mainPage {
+    grid-template-rows: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -48,20 +48,5 @@ button {
   .buy {
     clear: both;
     width: 100%;
-  }
-}
-
-@media (max-width: 700px) {
-  .left {
-    width: 100%;
-  }
-
-  .right {
-    clear: both;
-    width: 100%;
-  }
-
-  .textWidth {
-    width: 40%;
   }
 }

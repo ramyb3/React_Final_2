@@ -1,11 +1,10 @@
-import { useSaveDispatch } from "../menu";
+import Edit from "../edit-layout";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function EditCustomer() {
   const storeData = useSelector((state) => state);
-  const { saveForm, saveDispatch } = useSaveDispatch();
   const params = useParams();
 
   const [products, setProducts] = useState([]);
@@ -45,74 +44,14 @@ export default function EditCustomer() {
   }, []);
 
   return (
-    <>
-      <h2>Edit Customer:</h2>
-
-      <div className="left">
-        <b>Customer First Name:</b>{" "}
-        <input
-          className="textWidth"
-          type="text"
-          value={customer.Fname}
-          onChange={(e) => setCustomer({ ...customer, Fname: e.target.value })}
-        />
-        <br />
-        <br />
-        <b>Customer Last Name:</b>{" "}
-        <input
-          className="textWidth"
-          type="text"
-          value={customer.Lname}
-          onChange={(e) => setCustomer({ ...customer, Lname: e.target.value })}
-        />
-        <br />
-        <br />
-        <b>Customer City:</b>{" "}
-        <input
-          className="textWidth"
-          type="text"
-          value={customer.City}
-          onChange={(e) => setCustomer({ ...customer, City: e.target.value })}
-        />
-        <br />
-        <br />
-        <Link to="/customers">
-          <button onClick={() => saveForm("updateCustomer", customer, false)}>
-            Update
-          </button>
-        </Link>
-        <Link to="/customers">
-          <button onClick={() => saveDispatch("deleteCustomer", customer.ID)}>
-            Delete
-          </button>
-        </Link>
-        <br />
-        <br />
-      </div>
-
-      <div className="right">
-        {products.length != 0 ? (
-          <div>
-            <b>Products that this customer purchased:</b>
-
-            <ul>
-              {products.map((item, index) => {
-                return (
-                  <li key={index}>
-                    <Link to={`/products/editProduct/${item.ID}`}>
-                      {item.Name}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ) : (
-          <div>
-            <b>This customer didn't purchased any product!!</b>
-          </div>
-        )}
-      </div>
-    </>
+    <Edit
+      headline="Customer"
+      link="/customers"
+      secondLink="/products/editProduct/"
+      dispatch={["updateCustomer", false, "deleteCustomer"]}
+      mainData={customer}
+      setData={setCustomer}
+      secondData={products}
+    />
   );
 }
