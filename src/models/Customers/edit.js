@@ -1,10 +1,11 @@
+import { useSaveDispatch } from "../menu";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 
 export default function EditCustomer() {
   const storeData = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const { saveForm, saveDispatch } = useSaveDispatch();
   const params = useParams();
 
   const [products, setProducts] = useState([]);
@@ -43,14 +44,6 @@ export default function EditCustomer() {
     });
   }, []);
 
-  const send = () => {
-    if (customer.Fname == "" || customer.Lname == "" || customer.City == "") {
-      alert("YOU NEED TO FILL ALL THE FORM!!");
-    } else {
-      dispatch({ type: "updateCustomer", payload: customer });
-    }
-  };
-
   return (
     <>
       <h2>Edit Customer:</h2>
@@ -84,14 +77,12 @@ export default function EditCustomer() {
         <br />
         <br />
         <Link to="/customers">
-          <button onClick={send}>Update</button>
+          <button onClick={() => saveForm("updateCustomer", customer, false)}>
+            Update
+          </button>
         </Link>
         <Link to="/customers">
-          <button
-            onClick={() =>
-              dispatch({ type: "deleteCustomer", payload: customer.ID })
-            }
-          >
+          <button onClick={() => saveDispatch("deleteCustomer", customer.ID)}>
             Delete
           </button>
         </Link>

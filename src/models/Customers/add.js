@@ -1,9 +1,9 @@
+import { useSaveDispatch } from "../menu";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function AddProduct() {
-  const dispatch = useDispatch();
+  const { saveForm } = useSaveDispatch();
 
   const [customer, setCustomer] = useState({
     ID: 0,
@@ -12,46 +12,40 @@ export default function AddProduct() {
     City: "",
   });
 
-  const send = () => {
-    if (customer.Fname == "" || customer.Lname == "" || customer.City == "") {
-      alert("YOU NEED TO FILL ALL THE FORM!!");
-    } else {
-      dispatch({ type: "addCustomer", payload: customer });
-    }
-  };
-
   return (
-    <div style={{ textAlign: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "15px",
+      }}
+    >
       <h2>Add Customer:</h2>
 
       <input
-        type="text"
         placeholder="First Name"
         onChange={(e) => setCustomer({ ...customer, Fname: e.target.value })}
       />
-      <br />
-      <br />
       <input
-        type="text"
         placeholder="Last Name"
         onChange={(e) => setCustomer({ ...customer, Lname: e.target.value })}
       />
-      <br />
-      <br />
       <input
-        type="text"
         placeholder="City"
         onChange={(e) => setCustomer({ ...customer, City: e.target.value })}
       />
-      <br />
-      <br />
 
-      <Link to="/customers">
-        <button onClick={send}>Add</button>
-      </Link>
-      <Link to="/customers">
-        <button>Cancel</button>
-      </Link>
+      <div style={{ display: "flex", gap: "5px" }}>
+        <Link to="/customers">
+          <button onClick={() => saveForm("addCustomer", customer, false)}>
+            Add
+          </button>
+        </Link>
+        <Link to="/customers">
+          <button>Cancel</button>
+        </Link>
+      </div>
     </div>
   );
 }

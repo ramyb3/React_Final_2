@@ -1,10 +1,11 @@
+import { useSaveDispatch } from "../menu";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 
 export default function EditProduct() {
   const storeData = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const { saveForm, saveDispatch } = useSaveDispatch();
   const params = useParams();
 
   const [customers, setCustomers] = useState([]);
@@ -43,14 +44,6 @@ export default function EditProduct() {
       Quantity: obj.Quantity,
     });
   }, []);
-
-  const send = () => {
-    if (product.Price < 1 || product.Quantity < 1 || product.Name == "") {
-      alert("YOU NEED TO FILL ALL THE FORM!!");
-    } else {
-      dispatch({ type: "updateProduct", payload: product });
-    }
-  };
 
   return (
     <>
@@ -91,14 +84,12 @@ export default function EditProduct() {
         <br />
         <br />
         <Link to="/products">
-          <button onClick={send}>Update</button>
+          <button onClick={() => saveForm("updateProduct", product, true)}>
+            Update
+          </button>
         </Link>
         <Link to="/products">
-          <button
-            onClick={() =>
-              dispatch({ type: "deleteProduct", payload: product.ID })
-            }
-          >
+          <button onClick={() => saveDispatch("deleteProduct", product.ID)}>
             Delete
           </button>
         </Link>

@@ -1,10 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSaveDispatch } from "../menu";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Customers() {
   const storeData = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const { saveDispatch } = useSaveDispatch();
 
   const [products, setProducts] = useState([]);
   const [purchases, setPurchases] = useState([]);
@@ -18,14 +19,13 @@ export default function Customers() {
   }, [storeData]);
 
   const addProducts = () => {
-    dispatch({ type: "addPurchase", payload: [id, list] });
-
+    saveDispatch("addPurchase", [id, list]);
     setAdd(false);
     setList([]);
   };
 
   return (
-    <div>
+    <>
       <div className="customers">
         <h2>Customers Table:</h2>
 
@@ -153,6 +153,6 @@ export default function Customers() {
           <br />
         </div>
       ) : null}
-    </div>
+    </>
   );
 }

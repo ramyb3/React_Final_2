@@ -1,11 +1,12 @@
+import { useSaveDispatch } from "../menu";
 import Comp1 from "./comp1";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Products() {
   const storeData = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const { saveDispatch } = useSaveDispatch();
 
   const [customers, setCustomers] = useState([]);
   const [purchases, setPurchases] = useState([]);
@@ -59,7 +60,7 @@ export default function Products() {
   }, [storeData]);
 
   const addProducts = () => {
-    dispatch({ type: "addPurchase", payload: [id, list] });
+    saveDispatch("addPurchase", [id, list]);
     setAdd(false);
     setList([]);
   };
@@ -78,7 +79,7 @@ export default function Products() {
         {storeData[0][1].map((item, index) => {
           return (
             <div key={index}>
-              <div className="border" style={{ width: "85%" }}>
+              <div style={{ width: "85%", borderStyle: "solid" }}>
                 <b>Product Name: </b> &nbsp;&nbsp;
                 <Link to={"editProduct/" + item.ID}>{item.Name}</Link>
                 <br />
@@ -187,7 +188,7 @@ export default function Products() {
       ) : null}
 
       <div className="amount">
-        <div className="border" style={{ marginTop: "35px" }}>
+        <div style={{ marginTop: "35px", borderStyle: "solid" }}>
           <h3>Total amount of purchases: {amount}$</h3>
         </div>
       </div>

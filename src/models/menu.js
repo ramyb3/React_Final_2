@@ -20,15 +20,12 @@ export default function Menu() {
 
   return (
     <>
-      <div style={{ textAlign: "center" }}>
+      <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
         <Link to="products">
-          <button style={{ height: "30px", fontSize: "15px" }}>Products</button>
+          <button className="main-bt">Products</button>
         </Link>
-        &nbsp;
         <Link to="customers">
-          <button style={{ height: "30px", fontSize: "15px" }}>
-            Customers
-          </button>
+          <button className="main-bt">Customers</button>
         </Link>
       </div>
 
@@ -36,3 +33,28 @@ export default function Menu() {
     </>
   );
 }
+
+export const useSaveDispatch = () => {
+  const dispatch = useDispatch();
+
+  const saveForm = (type, payload, method) => {
+    if (
+      (method &&
+        (isNaN(payload.Price) ||
+          isNaN(payload.Quantity) ||
+          payload.Name === "")) ||
+      (!method &&
+        (payload.Fname === "" || payload.Lname === "" || payload.City === ""))
+    ) {
+      alert("YOU NEED TO FILL ALL FIELDS!!");
+    } else {
+      saveDispatch(type, payload);
+    }
+  };
+
+  const saveDispatch = (type, payload) => {
+    dispatch({ type, payload });
+  };
+
+  return { saveForm, saveDispatch };
+};

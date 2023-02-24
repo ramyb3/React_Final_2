@@ -2,6 +2,11 @@ button {
   cursor: pointer;
 }
 
+.main-bt {
+  height: 30px;
+  font-size: 15px;
+}
+
 .customers {
   float: left;
   width: 60%;
@@ -21,10 +26,6 @@ button {
 .right {
   float: right;
   width: 50%;
-}
-
-.border {
-  border-style: solid;
 }
 
 .amount {
