@@ -107,16 +107,16 @@ export default function Products() {
                     {item.Quantity}
                   </div>
                 </div>
-               
+
                 {purchases.find((purchase) => purchase.ProductID == item.ID) ? (
                   <>
-                  <b>Customers that purchased this product:</b>
+                    <b>Customers that purchased this product:</b>
                     {all.map((x, i) => {
                       return (
                         <div key={i}>
                           {x.Products.find((z) => z.ProductID == item.ID) ? (
                             <>
-                              <ul style={{marginTop:"0"}}>
+                              <ul style={{ marginTop: "0" }}>
                                 <li>
                                   <Link
                                     to={`/customers/editCustomer/${x.CustomerID}`}
@@ -151,7 +151,7 @@ export default function Products() {
                               </ul>
 
                               <button
-                                style={{marginBottom:"2px"}}
+                                style={{ marginBottom: "2px" }}
                                 onClick={() => {
                                   setAdd(true);
                                   setId(x.CustomerID);
@@ -165,7 +165,9 @@ export default function Products() {
                       );
                     })}
                   </>
-                ) : <b>There isn't any Customer that purchased this product!!</b>}
+                ) : (
+                  <b>There isn't any Customer that purchased this product!!</b>
+                )}
               </div>
             </div>
           );
