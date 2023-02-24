@@ -25,17 +25,25 @@ export default function Customers() {
   };
 
   return (
-    <>
-      <div className="customers">
+    <div
+      className="mainPage"
+      style={{
+        paddingLeft: "2px",
+        display: "grid",
+        gap: "20px",
+      }}
+    >
+      <div>
         <h2>Customers Table:</h2>
 
         <Link to="addCustomer">
           <button>Add Customer</button>
         </Link>
-        <br />
-        <br />
 
-        <table border="1" style={{ width: "80%", textAlign: "center" }}>
+        <table
+          border="1"
+          style={{ width: "80%", textAlign: "center", marginTop: "20px" }}
+        >
           <thead>
             <tr>
               <th>Name</th>
@@ -54,17 +62,16 @@ export default function Customers() {
                       {item.Fname} {item.Lname}
                     </Link>
                   </td>
-
                   <td>
                     {purchases.find(
                       (purchase) => purchase.CustomerID == item.ID
-                    ) != undefined ? (
+                    ) ? (
                       <>
                         {purchases.map((purchase, i) => {
                           return (
-                            <ul key={i}>
+                            <ul style={{ padding: "0" }} key={i}>
                               {purchase.CustomerID == item.ID ? (
-                                <li>
+                                <li style={{ listStyleType: "none" }}>
                                   <Link
                                     to={`/products/editProduct/${purchase.ProductID}`}
                                   >
@@ -85,17 +92,18 @@ export default function Customers() {
                       <>X</>
                     )}
                   </td>
-
                   <td>
                     {purchases.find(
                       (purchase) => purchase.CustomerID == item.ID
-                    ) != undefined ? (
+                    ) ? (
                       <>
                         {purchases.map((purchase, i) => {
                           return (
-                            <ul key={i}>
+                            <ul style={{ padding: "0" }} key={i}>
                               {purchase.CustomerID == item.ID ? (
-                                <li>{purchase.Date}</li>
+                                <li style={{ listStyleType: "none" }}>
+                                  {purchase.Date}
+                                </li>
                               ) : null}
                             </ul>
                           );
@@ -105,7 +113,6 @@ export default function Customers() {
                       <>X</>
                     )}
                   </td>
-
                   <td>
                     <button
                       onClick={() => {
@@ -123,13 +130,13 @@ export default function Customers() {
         </table>
       </div>
 
-      {add == true ? (
-        <div className="buy">
+      {add ? (
+        <div>
           <h3>
             Customer:{" "}
             <u>
-              {storeData[0][0].find((z) => z.ID == id).Fname}{" "}
-              {storeData[0][0].find((z) => z.ID == id).Lname}
+              {storeData[0][0].find((data) => data.ID == id).Fname}{" "}
+              {storeData[0][0].find((data) => data.ID == id).Lname}
             </u>
           </h3>
 
@@ -142,17 +149,15 @@ export default function Customers() {
                   onChange={(e) => setList([...list, e.target.value])}
                 />
                 {item.Name}
-                <br />
               </div>
             );
           })}
-          <br />
 
-          <button onClick={addProducts}>Buy</button>
-          <br />
-          <br />
+          <button style={{ marginTop: "15px" }} onClick={addProducts}>
+            Buy
+          </button>
         </div>
       ) : null}
-    </>
+    </div>
   );
 }

@@ -1,5 +1,4 @@
 import { useSaveDispatch } from "../menu";
-import Comp1 from "./comp1";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -66,43 +65,61 @@ export default function Products() {
   };
 
   return (
-    <div className="size">
-      <div style={{ float: "left", width: "43%" }}>
+    <div
+      className="productsPage"
+      style={{
+        paddingLeft: "2px",
+        display: "grid",
+        gap: "20px",
+      }}
+    >
+      <div>
         <h2> Products List:</h2>
 
         <Link to="addProduct">
           <button>Add Product</button>
         </Link>
-        <br />
-        <br />
 
         {storeData[0][1].map((item, index) => {
           return (
-            <div key={index}>
-              <div style={{ width: "85%", borderStyle: "solid" }}>
-                <b>Product Name: </b> &nbsp;&nbsp;
-                <Link to={"editProduct/" + item.ID}>{item.Name}</Link>
-                <br />
-                <b>Product Price: </b> &nbsp;&nbsp;{item.Price}$<br />
-                <b>Product Quantity: </b> &nbsp;&nbsp;{item.Quantity}
-                <br />
-                <br />
-                <Comp1 props={item} />
-                {purchases.find((purchase) => purchase.ProductID == item.ID) !=
-                undefined ? (
+            <div style={{ marginTop: "20px" }} key={index}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "85%",
+                  borderStyle: "solid",
+                  paddingLeft: "2px",
+                  gap: "15px",
+                }}
+              >
+                <div>
+                  <div>
+                    <b style={{ paddingRight: "8px" }}>Product Name:</b>
+                    <Link to={`editProduct/${item.ID}`}>{item.Name}</Link>
+                  </div>
+                  <div>
+                    <b style={{ paddingRight: "8px" }}>Product Price:</b>
+                    {item.Price}$
+                  </div>
+                  <div>
+                    <b style={{ paddingRight: "8px" }}>Product Quantity:</b>
+                    {item.Quantity}
+                  </div>
+                </div>
+               
+                {purchases.find((purchase) => purchase.ProductID == item.ID) ? (
                   <>
+                  <b>Customers that purchased this product:</b>
                     {all.map((x, i) => {
                       return (
                         <div key={i}>
-                          {x.Products.find((z) => z.ProductID == item.ID) !=
-                          undefined ? (
+                          {x.Products.find((z) => z.ProductID == item.ID) ? (
                             <>
-                              <ul>
+                              <ul style={{marginTop:"0"}}>
                                 <li>
                                   <Link
-                                    to={
-                                      "/customers/editCustomer/" + x.CustomerID
-                                    }
+                                    to={`/customers/editCustomer/${x.CustomerID}`}
                                   >
                                     {
                                       customers.find(
@@ -116,7 +133,6 @@ export default function Products() {
                                     }
                                   </Link>
                                 </li>
-
                                 <li>
                                   {x.Products.map((y, j) => {
                                     return (
@@ -135,6 +151,7 @@ export default function Products() {
                               </ul>
 
                               <button
+                                style={{marginBottom:"2px"}}
                                 onClick={() => {
                                   setAdd(true);
                                   setId(x.CustomerID);
@@ -142,28 +159,26 @@ export default function Products() {
                               >
                                 Add
                               </button>
-                              <br />
                             </>
                           ) : null}
                         </div>
                       );
                     })}
                   </>
-                ) : null}
+                ) : <b>There isn't any Customer that purchased this product!!</b>}
               </div>
-              <br />
             </div>
           );
         })}
       </div>
 
-      {add == true ? (
-        <div style={{ float: "left", width: "30%", textAlign: "left" }}>
+      {add ? (
+        <div>
           <h3>
             Customer:{" "}
             <u>
-              {customers.find((z) => z.ID == id).Fname}{" "}
-              {customers.find((z) => z.ID == id).Lname}
+              {customers.find((data) => data.ID == id).Fname}{" "}
+              {customers.find((data) => data.ID == id).Lname}
             </u>
           </h3>
 
@@ -176,22 +191,21 @@ export default function Products() {
                   onChange={(e) => setList([...list, e.target.value])}
                 />
                 {item.Name}
-                <br />
               </div>
             );
           })}
           <br />
 
-          <button onClick={addProducts}>Buy</button>
+          <button style={{ marginTop: "15px" }} onClick={addProducts}>
+            Buy
+          </button>
           <br />
         </div>
-      ) : null}
+      ) : (
+        <div />
+      )}
 
-      <div className="amount">
-        <div style={{ marginTop: "35px", borderStyle: "solid" }}>
-          <h3>Total amount of purchases: {amount}$</h3>
-        </div>
-      </div>
+      <h3>Total amount of purchases: {amount}$</h3>
     </div>
   );
 }

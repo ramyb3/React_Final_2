@@ -7,46 +7,22 @@ button {
   font-size: 15px;
 }
 
-.customers {
-  float: left;
-  width: 60%;
-}
-
-.buy {
-  float: right;
-  width: 40%;
-  text-align: left;
-}
-
-.amount {
-  float: right;
-  width: 25%;
-  text-align: center;
-}
-
-@media (min-width: 444px) {
+@media (min-width: 585px) {
   .mainPage {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .productsPage {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
-@media (max-width: 444px) {
-  .size {
-    font-size: 70%;
-  }
-
+@media (max-width: 585px) {
   .mainPage {
     grid-template-rows: repeat(2, minmax(0, 1fr));
   }
-}
 
-@media (max-width: 553px) {
-  .customers {
-    width: 100%;
-  }
-
-  .buy {
-    clear: both;
-    width: 100%;
+  .productsPage {
+    grid-template-rows: repeat(3, minmax(0, 1fr));
   }
 }
