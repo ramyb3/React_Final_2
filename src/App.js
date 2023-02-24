@@ -26,8 +26,8 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Menu />}>
-          <Route path="products" element={<MainPage comp={true}/>} />
-          <Route path="customers" element={<MainPage comp={false}/>} />
+          <Route path="products" element={<MainPage comp={true} />} />
+          <Route path="customers" element={<MainPage comp={false} />} />
           <Route
             path="products/editProduct/:id"
             element={<EditOrAddProduct edit={true} />}

@@ -28,7 +28,7 @@ export default function MainPage(props) {
 
   return (
     <div
-      className={props.comp? "productsPage" : "mainPage"}
+      className={props.comp ? "productsPage" : "mainPage"}
       style={{
         paddingLeft: "2px",
         display: "grid",
@@ -36,13 +36,13 @@ export default function MainPage(props) {
       }}
     >
       <div>
-        <h2>{props.comp? "Products List" : "Customers Table"}:</h2>
+        <h2>{props.comp ? "Products List" : "Customers Table"}:</h2>
 
-        <Link to={`add${props.comp? "Product" : "Customer"}`}>
-          <button>Add {props.comp? "Product" : "Customer"}</button>
+        <Link to={`add${props.comp ? "Product" : "Customer"}`}>
+          <button>Add {props.comp ? "Product" : "Customer"}</button>
         </Link>
 
-        {props.comp? <Products /> : <Customers />}
+        {props.comp ? <Products /> : <Customers />}
       </div>
 
       {add ? (
@@ -72,7 +72,9 @@ export default function MainPage(props) {
             Buy
           </button>
         </div>
-      ) : props.comp? <div/> : null}
+      ) : props.comp ? (
+        <div />
+      ) : null}
     </div>
   );
 }

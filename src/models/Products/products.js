@@ -155,7 +155,7 @@ export default function Products() {
         );
       })}
 
-     <h3>Total amount of purchases: {amount}$</h3> 
+      <h3>Total amount of purchases: {amount}$</h3>
     </>
   );
 }
