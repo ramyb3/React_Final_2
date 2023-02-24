@@ -1,14 +1,11 @@
 import "./App.css";
-import MenuComp from "./models/menu";
-import ProductsComp from "./models/Products/products";
-import CustomersComp from "./models/Customers/customers";
-import EditProductComp from "./models/Products/edit";
-import EditCustomerComp from "./models/Customers/edit";
-import AddProductComp from "./models/Products/add";
-import AddCustomerComp from "./models/Customers/add";
+import Menu from "./models/menu";
+import MainPage from "./models/main-page-layout";
+import EditOrAddProduct from "./models/Products/edit-or-add";
+import EditOrAddCustomer from "./models/Customers/edit-or-add";
 import { Route, Routes } from "react-router-dom";
-import emailjs from "emailjs-com";
 import { useEffect } from "react";
+import emailjs from "emailjs-com";
 
 export default function App() {
   useEffect(() => {
@@ -24,27 +21,31 @@ export default function App() {
   }, []);
 
   return (
-    <div>
+    <>
       <h1 style={{ textAlign: "center" }}>Store Project</h1>
 
       <Routes>
-        <Route path="/" element={<MenuComp />}>
-          <Route path="products" element={<ProductsComp />} />
-          <Route path="customers" element={<CustomersComp />} />
-
+        <Route path="/" element={<Menu />}>
+          <Route path="products" element={<MainPage comp={true}/>} />
+          <Route path="customers" element={<MainPage comp={false}/>} />
           <Route
             path="products/editProduct/:id"
-            element={<EditProductComp />}
+            element={<EditOrAddProduct edit={true} />}
           />
           <Route
             path="customers/editCustomer/:id"
-            element={<EditCustomerComp />}
+            element={<EditOrAddCustomer edit={true} />}
           />
-
-          <Route path="products/addProduct" element={<AddProductComp />} />
-          <Route path="customers/addCustomer" element={<AddCustomerComp />} />
+          <Route
+            path="products/addProduct"
+            element={<EditOrAddProduct edit={false} />}
+          />
+          <Route
+            path="customers/addCustomer"
+            element={<EditOrAddCustomer edit={false} />}
+          />
         </Route>
       </Routes>
-    </div>
+    </>
   );
 }

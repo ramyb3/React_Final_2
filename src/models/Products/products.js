@@ -1,19 +1,17 @@
-import { useSaveDispatch } from "../menu";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Products() {
   const storeData = useSelector((state) => state);
-  const { saveDispatch } = useSaveDispatch();
 
   const [customers, setCustomers] = useState([]);
   const [purchases, setPurchases] = useState([]);
   const [add, setAdd] = useState(false);
   const [id, setId] = useState(0);
+
   const [amount, setAmount] = useState(0);
-  const [all, setAll] = useState([]);
-  const [list, setList] = useState([]);
+  const [allData, setAllData] = useState([]);
 
   useEffect(() => {
     setCustomers(storeData[0][0]);
@@ -46,7 +44,7 @@ export default function Products() {
       obj.push({ CustomerID: temp[i], Products: products });
     }
 
-    setAll(obj);
+    setAllData(obj);
 
     const arr = storeData[0][2].map((x) => x.ProductID);
     let count = 0;
@@ -58,156 +56,106 @@ export default function Products() {
     setAmount(count);
   }, [storeData]);
 
-  const addProducts = () => {
-    saveDispatch("addPurchase", [id, list]);
-    setAdd(false);
-    setList([]);
-  };
-
   return (
-    <div
-      className="productsPage"
-      style={{
-        paddingLeft: "2px",
-        display: "grid",
-        gap: "20px",
-      }}
-    >
-      <div>
-        <h2> Products List:</h2>
-
-        <Link to="addProduct">
-          <button>Add Product</button>
-        </Link>
-
-        {storeData[0][1].map((item, index) => {
-          return (
-            <div style={{ marginTop: "20px" }} key={index}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "85%",
-                  borderStyle: "solid",
-                  paddingLeft: "2px",
-                  gap: "15px",
-                }}
-              >
+    <>
+      {storeData[0][1].map((item, index) => {
+        return (
+          <div style={{ marginTop: "20px" }} key={index}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "85%",
+                borderStyle: "solid",
+                paddingLeft: "2px",
+                gap: "15px",
+              }}
+            >
+              <div>
                 <div>
-                  <div>
-                    <b style={{ paddingRight: "8px" }}>Product Name:</b>
-                    <Link to={`editProduct/${item.ID}`}>{item.Name}</Link>
-                  </div>
-                  <div>
-                    <b style={{ paddingRight: "8px" }}>Product Price:</b>
-                    {item.Price}$
-                  </div>
-                  <div>
-                    <b style={{ paddingRight: "8px" }}>Product Quantity:</b>
-                    {item.Quantity}
-                  </div>
+                  <b style={{ paddingRight: "8px" }}>Product Name:</b>
+                  <Link to={`editProduct/${item.ID}`}>{item.Name}</Link>
                 </div>
-
-                {purchases.find((purchase) => purchase.ProductID == item.ID) ? (
-                  <>
-                    <b>Customers that purchased this product:</b>
-                    {all.map((x, i) => {
-                      return (
-                        <div key={i}>
-                          {x.Products.find((z) => z.ProductID == item.ID) ? (
-                            <>
-                              <ul style={{ marginTop: "0" }}>
-                                <li>
-                                  <Link
-                                    to={`/customers/editCustomer/${x.CustomerID}`}
-                                  >
-                                    {
-                                      customers.find(
-                                        (z) => z.ID == x.CustomerID
-                                      ).Fname
-                                    }{" "}
-                                    {
-                                      customers.find(
-                                        (z) => z.ID == x.CustomerID
-                                      ).Lname
-                                    }
-                                  </Link>
-                                </li>
-                                <li>
-                                  {x.Products.map((y, j) => {
-                                    return (
-                                      <div key={j}>
-                                        {y.ProductID == item.ID ? (
-                                          <>
-                                            {y.Date.map((z, k) => {
-                                              return <div key={k}>{z}</div>;
-                                            })}
-                                          </>
-                                        ) : null}
-                                      </div>
-                                    );
-                                  })}
-                                </li>
-                              </ul>
-
-                              <button
-                                style={{ marginBottom: "2px" }}
-                                onClick={() => {
-                                  setAdd(true);
-                                  setId(x.CustomerID);
-                                }}
-                              >
-                                Add
-                              </button>
-                            </>
-                          ) : null}
-                        </div>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <b>There isn't any Customer that purchased this product!!</b>
-                )}
+                <div>
+                  <b style={{ paddingRight: "8px" }}>Product Price:</b>
+                  {item.Price}$
+                </div>
+                <div>
+                  <b style={{ paddingRight: "8px" }}>Product Quantity:</b>
+                  {item.Quantity}
+                </div>
               </div>
+
+              {purchases.find((purchase) => purchase.ProductID == item.ID) ? (
+                <>
+                  <b>Customers that purchased this product:</b>
+                  {allData.map((data, index) => {
+                    return (
+                      <div key={index}>
+                        {data.Products.find(
+                          (temp) => temp.ProductID == item.ID
+                        ) ? (
+                          <>
+                            <ul style={{ marginTop: "0" }}>
+                              <li>
+                                <Link
+                                  to={`/customers/editCustomer/${data.CustomerID}`}
+                                >
+                                  {
+                                    customers.find(
+                                      (temp) => temp.ID == data.CustomerID
+                                    ).Fname
+                                  }{" "}
+                                  {
+                                    customers.find(
+                                      (temp) => temp.ID == data.CustomerID
+                                    ).Lname
+                                  }
+                                </Link>
+                              </li>
+                              <li>
+                                {data.Products.map((product, index) => {
+                                  return (
+                                    <div key={index}>
+                                      {product.ProductID == item.ID ? (
+                                        <>
+                                          {product.Date.map((date, index) => {
+                                            return (
+                                              <div key={index}>{date}</div>
+                                            );
+                                          })}
+                                        </>
+                                      ) : null}
+                                    </div>
+                                  );
+                                })}
+                              </li>
+                            </ul>
+
+                            <button
+                              style={{ marginBottom: "2px" }}
+                              onClick={() => {
+                                setAdd(true);
+                                setId(data.CustomerID);
+                              }}
+                            >
+                              Add
+                            </button>
+                          </>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </>
+              ) : (
+                <b>There isn't any Customer that purchased this product!!</b>
+              )}
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
 
-      {add ? (
-        <div>
-          <h3>
-            Customer:{" "}
-            <u>
-              {customers.find((data) => data.ID == id).Fname}{" "}
-              {customers.find((data) => data.ID == id).Lname}
-            </u>
-          </h3>
-
-          {storeData[0][1].map((item, index) => {
-            return (
-              <div key={index}>
-                <input
-                  type="checkbox"
-                  value={item.ID}
-                  onChange={(e) => setList([...list, e.target.value])}
-                />
-                {item.Name}
-              </div>
-            );
-          })}
-          <br />
-
-          <button style={{ marginTop: "15px" }} onClick={addProducts}>
-            Buy
-          </button>
-          <br />
-        </div>
-      ) : (
-        <div />
-      )}
-
-      <h3>Total amount of purchases: {amount}$</h3>
-    </div>
+     <h3>Total amount of purchases: {amount}$</h3> 
+    </>
   );
 }
