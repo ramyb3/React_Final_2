@@ -10,31 +10,35 @@ export default function Edit(props) {
   const [tempData, setTempData] = useState([]);
 
   useEffect(() => {
-    const obj = storeData[0][props.dispatch[1] ? 1 : 0].find(
-      (x) => x.ID == params.id
+    const obj = storeData[props.dispatch[1] ? "products" : "customers"].find(
+      (data) => data.ID == params.id
     );
-    let arr = storeData[0][2].filter(
-      (x) => x[props.dispatch[1] ? "ProductID" : "CustomerID"] == params.id
+    let arr1 = storeData.purchases.filter(
+      (purchase) =>
+        purchase[props.dispatch[1] ? "ProductID" : "CustomerID"] == params.id
     );
-    const arr1 = [];
+    const arr2 = [];
 
-    for (let i = 0; i < arr.length; i++) {
-      const check = storeData[0][props.dispatch[1] ? 0 : 1].find(
-        (x) => x.ID == arr[i][props.dispatch[1] ? "CustomerID" : "ProductID"]
+    for (let i = 0; i < arr1.length; i++) {
+      const tempObj = storeData[
+        props.dispatch[1] ? "customers" : "products"
+      ].find(
+        (data) =>
+          data.ID == arr1[i][props.dispatch[1] ? "CustomerID" : "ProductID"]
       );
-      arr1.push(check);
+      arr2.push(tempObj);
     }
 
-    arr = [];
+    arr1 = [];
 
-    let temp = arr1.map((x) => x.ID);
-    temp = temp.filter((x, index) => temp.indexOf(x) == index);
+    let tempArr = arr2.map((data) => data.ID);
+    tempArr = tempArr.filter((data, index) => tempArr.indexOf(data) == index);
 
-    for (let i = 0; i < temp.length; i++) {
-      arr.push(arr1.find((x) => x.ID == temp[i]));
+    for (let i = 0; i < tempArr.length; i++) {
+      arr1.push(arr2.find((data) => data.ID == tempArr[i]));
     }
 
-    setTempData(arr);
+    setTempData(arr1);
     props.setData(
       props.dispatch[1]
         ? {

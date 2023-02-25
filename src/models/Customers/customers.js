@@ -18,30 +18,30 @@ export default function Customers(props) {
         </tr>
       </thead>
 
-      {storeData[0][0].map((item, index) => {
+      {storeData.customers.map((customer, index) => {
         return (
           <tbody key={index}>
             <tr>
               <td>
-                <Link to={`editCustomer/${item.ID}`}>
-                  {item.Fname} {item.Lname}
+                <Link to={`editCustomer/${customer.ID}`}>
+                  {customer.Fname} {customer.Lname}
                 </Link>
               </td>
               <td>
-                {storeData[0][2].find(
-                  (purchase) => purchase.CustomerID == item.ID
+                {storeData.purchases.find(
+                  (purchase) => purchase.CustomerID == customer.ID
                 ) ? (
                   <>
-                    {storeData[0][2].map((purchase, i) => {
+                    {storeData.purchases.map((purchase, i) => {
                       return (
                         <ul style={{ padding: "0" }} key={i}>
-                          {purchase.CustomerID == item.ID ? (
+                          {purchase.CustomerID == customer.ID ? (
                             <li style={{ listStyleType: "none" }}>
                               <Link
                                 to={`/products/editProduct/${purchase.ProductID}`}
                               >
                                 {
-                                  storeData[0][1].find(
+                                  storeData.products.find(
                                     (product) =>
                                       product.ID == purchase.ProductID
                                   ).Name
@@ -58,14 +58,14 @@ export default function Customers(props) {
                 )}
               </td>
               <td>
-                {storeData[0][2].find(
-                  (purchase) => purchase.CustomerID == item.ID
+                {storeData.purchases.find(
+                  (purchase) => purchase.CustomerID == customer.ID
                 ) ? (
                   <>
-                    {storeData[0][2].map((purchase, i) => {
+                    {storeData.purchases.map((purchase, i) => {
                       return (
                         <ul style={{ padding: "0" }} key={i}>
-                          {purchase.CustomerID == item.ID ? (
+                          {purchase.CustomerID == customer.ID ? (
                             <li style={{ listStyleType: "none" }}>
                               {purchase.Date}
                             </li>
@@ -82,7 +82,7 @@ export default function Customers(props) {
                 <button
                   onClick={() => {
                     props.setAdd(true);
-                    props.setId(item.ID);
+                    props.setId(customer.ID);
                   }}
                 >
                   Buy Products

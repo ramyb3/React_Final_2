@@ -1,79 +1,76 @@
-function reducer(state = [], action) {
+function reducer(state = {}, action) {
   switch (action.type) {
     case "LOAD": {
-      return [...state, action.payload];
+      return action.payload;
     }
     case "addProduct": {
-      const id = Math.max(...state[0][1].map((x) => x.ID));
+      const id = Math.max(...state.products.map((product) => product.ID));
       action.payload.ID = id + 1;
-      state[0][1].push(action.payload);
+      state.products.push(action.payload);
 
-      return [[state[0][0], state[0][1], state[0][2]]];
+      return state;
     }
     case "updateProduct": {
-      const arr = state[0][1].filter((x) => x.ID != action.payload.ID);
-      arr.push(action.payload);
+      state.products = state.products.filter(
+        (product) => product.ID != action.payload.ID
+      );
+      state.products.push(action.payload);
 
-      return [[state[0][0], arr, state[0][2]]];
+      return state;
     }
     case "deleteProduct": {
-      const arr1 = state[0][1].filter((x) => x.ID != action.payload);
-      const arr2 = state[0][2].filter((x) => x.ProductID != action.payload); // all purchases not this product
+      state.products = state.products.filter(
+        (product) => product.ID != action.payload
+      );
+      state.purchases = state.purchases.filter(
+        (purchase) => purchase.ProductID != action.payload
+      ); // all purchases not this product
 
-      return [[state[0][0], arr1, arr2]];
+      return state;
     }
     case "addCustomer": {
-      const id = Math.max(...state[0][0].map((x) => x.ID));
+      const id = Math.max(...state.customers.map((customer) => customer.ID));
       action.payload.ID = id + 1;
-      state[0][0].push(action.payload);
+      state.customers.push(action.payload);
 
-      return [[state[0][0], state[0][1], state[0][2]]];
+      return state;
     }
     case "updateCustomer": {
-      const arr = state[0][0].filter((x) => x.ID != action.payload.ID);
-      arr.push(action.payload);
+      state.customers = state.customers.filter(
+        (customer) => customer.ID != action.payload.ID
+      );
+      state.customers.push(action.payload);
 
-      return [[arr, state[0][1], state[0][2]]];
+      return state;
     }
     case "deleteCustomer": {
-      const arr1 = state[0][0].filter((x) => x.ID != action.payload);
-      const arr2 = state[0][2].filter((x) => x.CustomerID != action.payload); // all purchases not this customer
+      state.customers = state.customers.filter(
+        (customer) => customer.ID != action.payload
+      );
+      state.purchases = state.purchases.filter(
+        (purchase) => purchase.CustomerID != action.payload
+      ); // all purchases not this customer
 
-      return [[arr1, state[0][1], arr2]];
+      return state;
     }
     case "addPurchase": {
+      const purchases = state.purchases;
       let date = new Date(Date.now());
-
-      const day = date.getDate();
-      const month = date.getMonth() + 1;
-      const year = date.getFullYear();
-
-      date = day + "/" + month + "/" + year;
-
-      const arr = state[0][2];
-      let temp;
+      date = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 
       for (let i = 0; i < action.payload[1].length; i++) {
-        if (arr.length > 0) {
-          temp = {
-            ID: arr[arr.length - 1].ID + 1,
-            CustomerID: action.payload[0],
-            ProductID: action.payload[1][i],
-            Date: date,
-          };
-        } else {
-          temp = {
-            ID: 1,
-            CustomerID: action.payload[0],
-            ProductID: action.payload[1][i],
-            Date: date,
-          };
-        }
+        const obj = {
+          ID:
+            1 + (purchases.length > 0 ? purchases[purchases.length - 1].ID : 0),
+          CustomerID: action.payload[0],
+          ProductID: action.payload[1][i],
+          Date: date,
+        };
 
-        arr.push(temp);
+        purchases.push(obj);
       }
 
-      return [[state[0][0], state[0][1], arr]];
+      return { ...state, purchases };
     }
 
     default:

@@ -39,12 +39,12 @@ export default function MainPage(props) {
           <h3>
             Customer:{" "}
             <u>
-              {storeData[0][0].find((data) => data.ID == id).Fname}{" "}
-              {storeData[0][0].find((data) => data.ID == id).Lname}
+              {storeData.customers.find((customer) => customer.ID == id).Fname}{" "}
+              {storeData.customers.find((customer) => customer.ID == id).Lname}
             </u>
           </h3>
 
-          {storeData[0][1].map((item, index) => {
+          {storeData.products.map((item, index) => {
             return (
               <div key={index}>
                 <input

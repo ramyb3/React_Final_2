@@ -7,40 +7,50 @@ export default function Products(props) {
   const [allData, setAllData] = useState([]);
 
   useEffect(() => {
-    const arr1 = storeData[0][2].map((x) => x.CustomerID);
-    const arr2 = storeData[0][2].map((x) => x.ProductID);
-    const temp = arr1.filter((x, index) => arr1.indexOf(x) == index);
-    const temp1 = arr2.filter((x, index) => arr2.indexOf(x) == index);
-    const obj = [];
+    let customers = storeData.purchases.map((purchase) => purchase.CustomerID);
+    let products = storeData.purchases.map((purchase) => purchase.ProductID);
+    customers = customers.filter(
+      (data, index) => customers.indexOf(data) == index
+    );
+    products = products.filter(
+      (data, index) => products.indexOf(data) == index
+    );
+    let arr = [];
 
-    for (let i = 0; i < temp.length; i++) {
-      const products = [];
+    for (let i = 0; i < customers.length; i++) {
+      const productsArr = [];
 
-      for (let j = 0; j < temp1.length; j++) {
-        const prod = storeData[0][2].filter(
-          (x) => x.ProductID == temp1[j] && x.CustomerID == temp[i]
+      for (let j = 0; j < products.length; j++) {
+        const purchases = storeData.purchases.filter(
+          (purchase) =>
+            purchase.ProductID == products[j] &&
+            purchase.CustomerID == customers[i]
         );
-        let date = storeData[0][2]
-          .filter((x) => x.ProductID == temp1[j] && x.CustomerID == temp[i])
-          .map((x) => x.Date);
+        let date = storeData.purchases
+          .filter(
+            (purchase) =>
+              purchase.ProductID == products[j] &&
+              purchase.CustomerID == customers[i]
+          )
+          .map((purchase) => purchase.Date);
 
-        date = date.filter((x, index) => date.indexOf(x) == index);
+        date = date.filter((data, index) => date.indexOf(data) == index);
 
-        if (prod.length != 0) {
-          products.push({ ProductID: prod[0].ProductID, Date: date });
+        if (purchases.length != 0) {
+          productsArr.push({ ProductID: purchases[0].ProductID, Date: date });
         }
       }
 
-      obj.push({ CustomerID: temp[i], Products: products });
+      arr.push({ CustomerID: customers[i], Products: productsArr });
     }
 
-    setAllData(obj);
+    setAllData(arr);
 
-    const arr = storeData[0][2].map((x) => x.ProductID);
+    arr = storeData.purchases.map((purchase) => purchase.ProductID);
     let count = 0;
 
     for (let i = 0; i < arr.length; i++) {
-      count += storeData[0][1].find((x) => x.ID == arr[i]).Price;
+      count += storeData.products.find((product) => product.ID == arr[i]).Price;
     }
 
     props.setAmount(count);
@@ -48,7 +58,7 @@ export default function Products(props) {
 
   return (
     <>
-      {storeData[0][1].map((item, index) => {
+      {storeData.products.map((product, index) => {
         return (
           <div style={{ marginTop: "20px" }} key={index}>
             <div
@@ -63,15 +73,15 @@ export default function Products(props) {
                 <Line
                   text="Name"
                   children={
-                    <Link to={`editProduct/${item.ID}`}>{item.Name}</Link>
+                    <Link to={`editProduct/${product.ID}`}>{product.Name}</Link>
                   }
                 />
-                <Line text="Price" children={`${item.Price}$`} />
-                <Line text="Quantity" children={item.Quantity} />
+                <Line text="Price" children={`${product.Price}$`} />
+                <Line text="Quantity" children={product.Quantity} />
               </div>
 
-              {storeData[0][2].find(
-                (purchase) => purchase.ProductID == item.ID
+              {storeData.purchases.find(
+                (purchase) => purchase.ProductID == product.ID
               ) ? (
                 <>
                   <b>Customers that purchased this product:</b>
@@ -79,7 +89,7 @@ export default function Products(props) {
                     return (
                       <div key={index}>
                         {data.Products.find(
-                          (temp) => temp.ProductID == item.ID
+                          (temp) => temp.ProductID == product.ID
                         ) ? (
                           <>
                             <ul style={{ marginTop: "0" }}>
@@ -88,24 +98,24 @@ export default function Products(props) {
                                   to={`/customers/editCustomer/${data.CustomerID}`}
                                 >
                                   {
-                                    storeData[0][0].find(
+                                    storeData.customers.find(
                                       (temp) => temp.ID == data.CustomerID
                                     ).Fname
                                   }{" "}
                                   {
-                                    storeData[0][0].find(
+                                    storeData.customers.find(
                                       (temp) => temp.ID == data.CustomerID
                                     ).Lname
                                   }
                                 </Link>
                               </li>
                               <li>
-                                {data.Products.map((product, index) => {
+                                {data.Products.map((item, index) => {
                                   return (
                                     <div key={index}>
-                                      {product.ProductID == item.ID ? (
+                                      {item.ProductID == product.ID ? (
                                         <>
-                                          {product.Date.map((date, index) => {
+                                          {item.Date.map((date, index) => {
                                             return (
                                               <div key={index}>{date}</div>
                                             );

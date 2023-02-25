@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 export default function Menu() {
-  const dispatch = useDispatch();
+  const { saveDispatch } = useSaveDispatch();
 
   useEffect(() => {
     const customers = [
@@ -15,7 +15,7 @@ export default function Menu() {
       { ID: 2, Name: "TV", Price: 1000, Quantity: 1 },
     ];
 
-    dispatch({ type: "LOAD", payload: [customers, products, []] });
+    saveDispatch("LOAD", { customers, products, purchases: [] });
   }, []);
 
   return (
