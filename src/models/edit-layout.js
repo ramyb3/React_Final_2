@@ -1,13 +1,12 @@
-import { useSaveDispatch } from "./menu";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { Buttons } from "./menu";
 
 export default function Edit(props) {
   const storeData = useSelector((state) => state);
   const params = useParams();
-  const { saveForm, saveDispatch } = useSaveDispatch();
   const [tempData, setTempData] = useState([]);
 
   useEffect(() => {
@@ -56,33 +55,19 @@ export default function Edit(props) {
   return (
     <>
       <h2>Edit {props.headline}:</h2>
-      <div
-        className="mainPage"
-        style={{
-          paddingLeft: "2px",
-          display: "grid",
-          gap: "20px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "start",
-            gap: "15px",
-          }}
-        >
+      <div className="grid mainPage">
+        <div className="flex" style={{ alignItems: "start" }}>
           {props.dispatch[1] ? (
             <>
               <Input
-                text="Product Name: "
+                text="Product Name"
                 value={props.data.Name}
                 onChange={(e) =>
                   props.setData({ ...props.data, Name: e.target.value })
                 }
               />
               <Input
-                text="Product Price: "
+                text="Product Price"
                 min="1"
                 type="number"
                 value={props.data.Price}
@@ -94,7 +79,7 @@ export default function Edit(props) {
                 }
               />
               <Input
-                text="Product Quantity: "
+                text="Product Quantity"
                 min="1"
                 type="number"
                 value={props.data.Quantity}
@@ -109,21 +94,21 @@ export default function Edit(props) {
           ) : (
             <>
               <Input
-                text="Customer First Name: "
+                text="Customer First Name"
                 value={props.data.Fname}
                 onChange={(e) =>
                   props.setData({ ...props.data, Fname: e.target.value })
                 }
               />
               <Input
-                text="Customer Last Name: "
+                text="Customer Last Name"
                 value={props.data.Lname}
                 onChange={(e) =>
                   props.setData({ ...props.data, Lname: e.target.value })
                 }
               />
               <Input
-                text="Customer City: "
+                text="Customer City"
                 value={props.data.City}
                 onChange={(e) =>
                   props.setData({ ...props.data, City: e.target.value })
@@ -132,24 +117,12 @@ export default function Edit(props) {
             </>
           )}
 
-          <div style={{ display: "flex", gap: "5px" }}>
-            <Link to={props.link}>
-              <button
-                onClick={() =>
-                  saveForm(props.dispatch[0], props.data, props.dispatch[1])
-                }
-              >
-                Update
-              </button>
-            </Link>
-            <Link to={props.link}>
-              <button
-                onClick={() => saveDispatch(props.dispatch[2], props.data.ID)}
-              >
-                Delete
-              </button>
-            </Link>
-          </div>
+          <Buttons
+            comp={false}
+            link={props.link}
+            dispatch={props.dispatch}
+            data={props.data}
+          />
         </div>
 
         <div>
@@ -178,7 +151,7 @@ export default function Edit(props) {
           ) : (
             <b>
               {props.dispatch[1]
-                ? "There isn't any Customer that purchased this"
+                ? "There isn't any customer that purchased this"
                 : "This customer didn't purchased any"}{" "}
               product!!
             </b>
@@ -192,7 +165,7 @@ export default function Edit(props) {
 function Input(props) {
   return (
     <div>
-      <b>{props.text}</b>
+      <b>{props.text}: </b>
       <input
         value={props.value}
         onChange={props.onChange}

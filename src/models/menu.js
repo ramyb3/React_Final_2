@@ -34,6 +34,35 @@ export default function Menu() {
   );
 }
 
+export function Buttons(props) {
+  const { saveForm, saveDispatch } = useSaveDispatch();
+
+  return (
+    <div style={{ display: "flex", gap: "5px" }}>
+      <Link to={props.link}>
+        <button
+          onClick={() =>
+            saveForm(props.dispatch[0], props.data, props.dispatch[1])
+          }
+        >
+          {props.comp ? "Add" : "Update"}
+        </button>
+      </Link>
+      <Link to={props.link}>
+        <button
+          onClick={() => {
+            if (!props.comp) {
+              saveDispatch(props.dispatch[2], props.data.ID);
+            }
+          }}
+        >
+          {props.comp ? "Cancel" : "Delete"}
+        </button>
+      </Link>
+    </div>
+  );
+}
+
 export const useSaveDispatch = () => {
   const dispatch = useDispatch();
 

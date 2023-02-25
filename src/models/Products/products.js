@@ -2,21 +2,11 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-export default function Products() {
+export default function Products(props) {
   const storeData = useSelector((state) => state);
-
-  const [customers, setCustomers] = useState([]);
-  const [purchases, setPurchases] = useState([]);
-  const [add, setAdd] = useState(false);
-  const [id, setId] = useState(0);
-
-  const [amount, setAmount] = useState(0);
   const [allData, setAllData] = useState([]);
 
   useEffect(() => {
-    setCustomers(storeData[0][0]);
-    setPurchases(storeData[0][2]);
-
     const arr1 = storeData[0][2].map((x) => x.CustomerID);
     const arr2 = storeData[0][2].map((x) => x.ProductID);
     const temp = arr1.filter((x, index) => arr1.indexOf(x) == index);
@@ -53,7 +43,7 @@ export default function Products() {
       count += storeData[0][1].find((x) => x.ID == arr[i]).Price;
     }
 
-    setAmount(count);
+    props.setAmount(count);
   }, [storeData]);
 
   return (
@@ -62,31 +52,27 @@ export default function Products() {
         return (
           <div style={{ marginTop: "20px" }} key={index}>
             <div
+              className="flex"
               style={{
-                display: "flex",
-                flexDirection: "column",
                 width: "85%",
                 borderStyle: "solid",
                 paddingLeft: "2px",
-                gap: "15px",
               }}
             >
               <div>
-                <div>
-                  <b style={{ paddingRight: "8px" }}>Product Name:</b>
-                  <Link to={`editProduct/${item.ID}`}>{item.Name}</Link>
-                </div>
-                <div>
-                  <b style={{ paddingRight: "8px" }}>Product Price:</b>
-                  {item.Price}$
-                </div>
-                <div>
-                  <b style={{ paddingRight: "8px" }}>Product Quantity:</b>
-                  {item.Quantity}
-                </div>
+                <Line
+                  text="Name"
+                  children={
+                    <Link to={`editProduct/${item.ID}`}>{item.Name}</Link>
+                  }
+                />
+                <Line text="Price" children={`${item.Price}$`} />
+                <Line text="Quantity" children={item.Quantity} />
               </div>
 
-              {purchases.find((purchase) => purchase.ProductID == item.ID) ? (
+              {storeData[0][2].find(
+                (purchase) => purchase.ProductID == item.ID
+              ) ? (
                 <>
                   <b>Customers that purchased this product:</b>
                   {allData.map((data, index) => {
@@ -102,12 +88,12 @@ export default function Products() {
                                   to={`/customers/editCustomer/${data.CustomerID}`}
                                 >
                                   {
-                                    customers.find(
+                                    storeData[0][0].find(
                                       (temp) => temp.ID == data.CustomerID
                                     ).Fname
                                   }{" "}
                                   {
-                                    customers.find(
+                                    storeData[0][0].find(
                                       (temp) => temp.ID == data.CustomerID
                                     ).Lname
                                   }
@@ -135,11 +121,11 @@ export default function Products() {
                             <button
                               style={{ marginBottom: "2px" }}
                               onClick={() => {
-                                setAdd(true);
-                                setId(data.CustomerID);
+                                props.setAdd(true);
+                                props.setId(data.CustomerID);
                               }}
                             >
-                              Add
+                              Buy Products
                             </button>
                           </>
                         ) : null}
@@ -148,14 +134,21 @@ export default function Products() {
                   })}
                 </>
               ) : (
-                <b>There isn't any Customer that purchased this product!!</b>
+                <b>There isn't any customer that purchased this product!!</b>
               )}
             </div>
           </div>
         );
       })}
-
-      <h3>Total amount of purchases: {amount}$</h3>
     </>
+  );
+}
+
+function Line(props) {
+  return (
+    <div>
+      <b style={{ paddingRight: "8px" }}>Product {props.text}:</b>
+      {props.children}
+    </div>
   );
 }

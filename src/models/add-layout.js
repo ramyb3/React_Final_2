@@ -1,18 +1,8 @@
-import { useSaveDispatch } from "./menu";
-import { Link } from "react-router-dom";
+import { Buttons } from "./menu";
 
 export default function Add(props) {
-  const { saveForm } = useSaveDispatch();
-
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "15px",
-      }}
-    >
+    <div className="flex" style={{ alignItems: "center" }}>
       <h2>Add {props.headline}:</h2>
       {props.dispatch[1] ? (
         <>
@@ -64,20 +54,13 @@ export default function Add(props) {
           />
         </>
       )}
-      <div style={{ display: "flex", gap: "5px" }}>
-        <Link to={props.link}>
-          <button
-            onClick={() =>
-              saveForm(props.dispatch[0], props.data, props.dispatch[1])
-            }
-          >
-            Add
-          </button>
-        </Link>
-        <Link to={props.link}>
-          <button>Cancel</button>
-        </Link>
-      </div>
+
+      <Buttons
+        comp={true}
+        link={props.link}
+        dispatch={props.dispatch}
+        data={props.data}
+      />
     </div>
   );
 }

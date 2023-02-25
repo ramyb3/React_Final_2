@@ -1,19 +1,8 @@
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Customers() {
+export default function Customers(props) {
   const storeData = useSelector((state) => state);
-
-  const [products, setProducts] = useState([]);
-  const [purchases, setPurchases] = useState([]);
-  const [add, setAdd] = useState(false);
-  const [id, setId] = useState(0);
-
-  useEffect(() => {
-    setProducts(storeData[0][1]);
-    setPurchases(storeData[0][2]);
-  }, [storeData]);
 
   return (
     <table
@@ -39,11 +28,11 @@ export default function Customers() {
                 </Link>
               </td>
               <td>
-                {purchases.find(
+                {storeData[0][2].find(
                   (purchase) => purchase.CustomerID == item.ID
                 ) ? (
                   <>
-                    {purchases.map((purchase, i) => {
+                    {storeData[0][2].map((purchase, i) => {
                       return (
                         <ul style={{ padding: "0" }} key={i}>
                           {purchase.CustomerID == item.ID ? (
@@ -52,7 +41,7 @@ export default function Customers() {
                                 to={`/products/editProduct/${purchase.ProductID}`}
                               >
                                 {
-                                  products.find(
+                                  storeData[0][1].find(
                                     (product) =>
                                       product.ID == purchase.ProductID
                                   ).Name
@@ -69,11 +58,11 @@ export default function Customers() {
                 )}
               </td>
               <td>
-                {purchases.find(
+                {storeData[0][2].find(
                   (purchase) => purchase.CustomerID == item.ID
                 ) ? (
                   <>
-                    {purchases.map((purchase, i) => {
+                    {storeData[0][2].map((purchase, i) => {
                       return (
                         <ul style={{ padding: "0" }} key={i}>
                           {purchase.CustomerID == item.ID ? (
@@ -92,8 +81,8 @@ export default function Customers() {
               <td>
                 <button
                   onClick={() => {
-                    setAdd(true);
-                    setId(item.ID);
+                    props.setAdd(true);
+                    props.setId(item.ID);
                   }}
                 >
                   Buy Products
