@@ -10,26 +10,22 @@ export default function EditOrAddProduct(props) {
     Quantity: 0,
   });
 
-  return (
-    <>
-      {props.edit ? (
-        <Edit
-          headline="Product"
-          link="/products"
-          secondLink="/customers/editCustomer/"
-          dispatch={["updateProduct", true, "deleteProduct"]}
-          data={product}
-          setData={setProduct}
-        />
-      ) : (
-        <Add
-          headline="Product"
-          link="/products"
-          dispatch={["addProduct", true]}
-          data={product}
-          setData={setProduct}
-        />
-      )}
-    </>
+  return props.edit ? (
+    <Edit
+      headline="Product"
+      link="/products"
+      secondLink="/customers/editCustomer/"
+      dispatch={["updateProduct", true, "deleteProduct"]}
+      data={product}
+      setData={setProduct}
+    />
+  ) : (
+    <Add
+      headline="Product"
+      link="/products"
+      dispatch={["addProduct", true]}
+      data={product}
+      setData={setProduct}
+    />
   );
 }

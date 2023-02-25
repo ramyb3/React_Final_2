@@ -10,26 +10,22 @@ export default function EditOrAddCustomer(props) {
     City: "",
   });
 
-  return (
-    <>
-      {props.edit ? (
-        <Edit
-          headline="Customer"
-          link="/customers"
-          secondLink="/products/editProduct/"
-          dispatch={["updateCustomer", false, "deleteCustomer"]}
-          data={customer}
-          setData={setCustomer}
-        />
-      ) : (
-        <Add
-          headline="Customer"
-          link="/customers"
-          dispatch={["addCustomer", false]}
-          data={customer}
-          setData={setCustomer}
-        />
-      )}
-    </>
+  return props.edit ? (
+    <Edit
+      headline="Customer"
+      link="/customers"
+      secondLink="/products/editProduct/"
+      dispatch={["updateCustomer", false, "deleteCustomer"]}
+      data={customer}
+      setData={setCustomer}
+    />
+  ) : (
+    <Add
+      headline="Customer"
+      link="/customers"
+      dispatch={["addCustomer", false]}
+      data={customer}
+      setData={setCustomer}
+    />
   );
 }

@@ -10,6 +10,7 @@ export default function Edit(props) {
   const [tempData, setTempData] = useState([]);
 
   useEffect(() => {
+    const arr2 = [];
     const obj = storeData[props.dispatch[1] ? "products" : "customers"].find(
       (data) => data.ID == params.id
     );
@@ -17,7 +18,6 @@ export default function Edit(props) {
       (purchase) =>
         purchase[props.dispatch[1] ? "ProductID" : "CustomerID"] == params.id
     );
-    const arr2 = [];
 
     for (let i = 0; i < arr1.length; i++) {
       const tempObj = storeData[

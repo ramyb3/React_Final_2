@@ -27,57 +27,8 @@ export default function Customers(props) {
                   {customer.Fname} {customer.Lname}
                 </Link>
               </td>
-              <td>
-                {storeData.purchases.find(
-                  (purchase) => purchase.CustomerID == customer.ID
-                ) ? (
-                  <>
-                    {storeData.purchases.map((purchase, i) => {
-                      return (
-                        <ul style={{ padding: "0" }} key={i}>
-                          {purchase.CustomerID == customer.ID ? (
-                            <li style={{ listStyleType: "none" }}>
-                              <Link
-                                to={`/products/editProduct/${purchase.ProductID}`}
-                              >
-                                {
-                                  storeData.products.find(
-                                    (product) =>
-                                      product.ID == purchase.ProductID
-                                  ).Name
-                                }
-                              </Link>
-                            </li>
-                          ) : null}
-                        </ul>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <>X</>
-                )}
-              </td>
-              <td>
-                {storeData.purchases.find(
-                  (purchase) => purchase.CustomerID == customer.ID
-                ) ? (
-                  <>
-                    {storeData.purchases.map((purchase, i) => {
-                      return (
-                        <ul style={{ padding: "0" }} key={i}>
-                          {purchase.CustomerID == customer.ID ? (
-                            <li style={{ listStyleType: "none" }}>
-                              {purchase.Date}
-                            </li>
-                          ) : null}
-                        </ul>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <>X</>
-                )}
-              </td>
+              <TableData date={false} data={storeData} id={customer.ID} />
+              <TableData date={true} data={storeData} id={customer.ID} />
               <td>
                 <button
                   onClick={() => {
@@ -93,5 +44,39 @@ export default function Customers(props) {
         );
       })}
     </table>
+  );
+}
+
+function TableData(props) {
+  return (
+    <td>
+      {props.data.purchases.find(
+        (purchase) => purchase.CustomerID == props.id
+      ) ? (
+        props.data.purchases.map((purchase, i) => {
+          return (
+            <ul style={{ padding: "0" }} key={i}>
+              {purchase.CustomerID == props.id ? (
+                <li style={{ listStyleType: "none" }}>
+                  {props.date ? (
+                    purchase.Date
+                  ) : (
+                    <Link to={`/products/editProduct/${purchase.ProductID}`}>
+                      {
+                        props.data.products.find(
+                          (product) => product.ID == purchase.ProductID
+                        ).Name
+                      }
+                    </Link>
+                  )}
+                </li>
+              ) : null}
+            </ul>
+          );
+        })
+      ) : (
+        <>X</>
+      )}
+    </td>
   );
 }
