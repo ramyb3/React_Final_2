@@ -5,13 +5,21 @@ import EditOrAddProduct from "./models/Products/edit-or-add";
 import EditOrAddCustomer from "./models/Customers/edit-or-add";
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
+import { useDeviceData } from "react-device-detect";
 import emailjs from "emailjs-com";
 
 export default function App() {
+  const userData = useDeviceData();
+
   useEffect(() => {
     const templateParams = {
-      message: `react-redux:\n${navigator.userAgent};\nresolution: ${window.screen.width} X ${window.screen.height}`,
+      message: `react-redux:\n\n${JSON.stringify(
+        userData,
+        null,
+        2
+      )}\n\nresolution: ${window.screen.width} X ${window.screen.height}`,
     };
+
     emailjs.send(
       process.env.REACT_APP_EMAIL_JS_SERVICE,
       process.env.REACT_APP_EMAIL_JS_TEMPLATE,
