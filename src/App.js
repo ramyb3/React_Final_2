@@ -5,27 +5,33 @@ import EditOrAddProduct from "./models/Products/edit-or-add";
 import EditOrAddCustomer from "./models/Customers/edit-or-add";
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
-import { useDeviceData } from "react-device-detect";
-import emailjs from "emailjs-com";
+import axios from "axios";
 
 export default function App() {
-  const userData = useDeviceData();
-
   useEffect(() => {
-    const templateParams = {
-      message: `react-redux:\n\n${JSON.stringify(
-        userData,
-        null,
-        2
-      )}\n\nresolution: ${window.screen.width} X ${window.screen.height}`,
+    const sendMail = async () => {
+      try {
+        const response = await axios(
+          `https://api.apicagent.com/?ua=${navigator.userAgent}`
+        );
+
+        const body = {
+          resolution: `${window.screen.width} X ${window.screen.height}`,
+          response: JSON.stringify(response.data, null, 2),
+          name: `react-redux - ${
+            JSON.stringify(response.data).toLowerCase().includes("mobile")
+              ? "Mobile"
+              : "Desktop"
+          }`,
+        };
+
+        await axios.post(process.env.REACT_APP_MAIL, body);
+      } catch (e) {
+        console.error(e);
+      }
     };
 
-    emailjs.send(
-      process.env.REACT_APP_EMAIL_JS_SERVICE,
-      process.env.REACT_APP_EMAIL_JS_TEMPLATE,
-      templateParams,
-      process.env.REACT_APP_EMAIL_JS_USER
-    );
+    sendMail();
   }, []);
 
   return (
